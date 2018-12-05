@@ -1,5 +1,4 @@
 from geotext import GeoText
-#CHANGER De code !!
 
 book = open("C:/Users/Name/Downloads/chap1.txt","r")
 bow = list()
