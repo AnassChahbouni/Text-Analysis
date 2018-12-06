@@ -54,8 +54,6 @@ for name in majorCharacters:
 """ ----------------- """    
 
 """ REMPPLISSAGE  GRAPHE + AFFICHAGE GRAPHE AVEC POID """ 
-
-""" ----------------- """  
 print(matrice_perso)                 
 i = 0
 for name in majorCharacters:
@@ -65,13 +63,13 @@ for name in majorCharacters:
             if matrice_perso[i,j] > 0:
                 w = 1 * matrice_perso[i,j]
                 print("nom1 : "+name+"| nom2 : "+name2+"| posI : "+str(i)+"| posJ : "+str(j)+"| weight : "+str(w))
-                G.add_edge(name,name2,weight=w)
+                G.add_edge(name,name2,with_labels=True,weight=w)
         j+=1
     i+=1               
 
 pos=nx.spring_layout(G)
+nx.draw_networkx(G, pos, with_labels=True)
 nx.draw(G,pos)
 labels = nx.get_edge_attributes(G,'weight')
-nx.draw_networkx_edge_labels(G,pos,edge_labels=labels)
-
-text.close()
+nx.draw_networkx_edge_labels(G,pos,edge_labels=labels,font_size=10, font_color='k', font_family='sans-serif', font_weight='normal', alpha=1.0)
+""" ----------------- """  
