@@ -4,6 +4,77 @@ from nltk.corpus import stopwords
 import re
 
 
+#Tokenize the text in sentences
+def get_sent_tokens(raw,encoding='utf8'):
+    tokens = nltk.sent_tokenize(raw,"french")
+    print( "Nombre de phrases  : %d" % len(tokens))
+    return tokens
+
+#Tokenize the text in words
+def get_word_tokens(raw,encoding='utf8'):
+    tokens = nltk.word_tokenize(raw,"french")
+    print( "Nombre de mots  : %d" % len(tokens))
+    return tokens
+
+def get_nltk_text(raw,encoding='utf8'):
+    no_commas = re.sub(r'[.|,|\']',' ', str(raw))
+    tokens = nltk.word_tokenize(no_commas)
+    text=nltk.Text(tokens,encoding)
+    return text
+
+#Clean tokens from stopwords and punctuation and size more then
+def filter_tokens(text):
+    #French punctuation
+    punctuation = ['(', ')', '?', ':', ';', ',', '.', '!', '/', '"', "'",'»','«','’','–','-','_']
+    #More french stopwords
+    #Nombres, déterminants, pronoms, conjonctions, prépositions et adverbes
+    dico = [
+        #NOMBRES
+            "zéro", "un", "deux", "trois", "quatre", "cinq", "six", 
+            "sept", "huit", "neuf", "dix", "onze", "douze", "treize", 
+            "quatorze", "quinze", "seize", "dix-sept", "dix-huit", "dix-neuf", 
+            "vingt", "trente", "quarante", "cinquante", "soixante", 
+            "soixante-dix", "quatre-vingts", "quatre-vingt-dix", "cent",
+    	# ARTICLES / DETERMINANTS
+        	"le", "la", "les", "l'", "un", "une", "des", "d'",
+    		"du", "de", "au", "aux", "ce", "cet", "cette", "ces",
+    		"mon", "son", "ma", "ta", "sa", "mes", "ses",
+    		"notre", "votre", "leur", "nos", "vos", "leurs",
+    		"aucun", "aucune", "aucuns", "aucunes",
+    		"tel", "telle", "tels", "telles",
+    		"tout", "toute", "tous", "toutes",
+    		"chaque",
+    	# PRONOM
+        	"je", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles",
+    		"me", "m'", "moi", "te", "t'", "toi", "ça",
+    		"se", "y", "le", "lui", "soi", "leur", "leures", "leurs", "eux", "lui",
+    		"qui", "que", "quoi", "dont", "où", "quiconque", 
+            "rien", "autrui", "nul", "personne", "autre", "autres", "certains", "plusieurs",
+            "aucun", "chacun", "même", "tout", "toute", "tous", "toutes",
+    	# CONJONCTION
+        	"mais", "ou", "et", "donc", "or", "ni", "car",
+    		"que", "quand", "comme", "si", "puis",
+    		"lorsque", "quoique", "puisque", "parce",
+    	# PREPOSITION
+        	"à", "devant", "derrière", "malgré", "sauf", "autour",
+    		"selon", "avant", "devant", "sous", "avec", 
+    		"en", "par", "sur", "entre", "parmi", "chez",
+    		"envers", "pendant", "vers", "dans", "pour", "de", 
+    		"près", "depuis", "sans",
+        #ADVERBE
+            "toujours", "plus", "moins", "encore", "peu", "trop", 
+            "très", "assez", "autant", "beaucoup", "quelque", "quelques", "voilà",
+            "quelques", "davantage", "guére", "tant", "alors", 
+            "ici", "alors", "enfin", "cependant", "maintenant"
+    ]
+    words = [w.lower() for w in text]
+    clean_tokens = []
+    for word in words:
+        if word not in dico and word not in stopwords.words('french') and word not in punctuation and len(word) > 1:
+            clean_tokens.append(word)
+    #clean_tokens.sort()
+    return clean_tokens
+
 
 #Découpage du texte en phrase et renvoie un arbre (tree)        
 def chunkSentences(text):
