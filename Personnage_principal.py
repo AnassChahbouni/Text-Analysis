@@ -19,8 +19,8 @@ def extractEntityNames(tree, _entityNames=None):
     return _entityNames
 
 #Renvoie tout les personnages 
-def getMajorCharacters(entityNames):
-    return {name for name in entityNames if entityNames.count(name) > 2}
+def getCharacters(entityNames):
+    return {name for name in entityNames if entityNames.count(name) > 1}
 
 #Renvoie les personnages principaux en fonction de la frequence d'apparition 
 def getMajorCharacters(entityNames, feq):
