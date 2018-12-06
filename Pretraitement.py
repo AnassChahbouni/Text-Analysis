@@ -18,25 +18,6 @@ def chunkSentences(text):
         chunkedSentences = nltk.ne_chunk_sents(taggedSentences, binary=True)
     return chunkedSentences
     
-#Prend en entrée le tree et renvoie les entités nommées
-def extractEntityNames(tree, _entityNames=None):
-
-    if _entityNames is None:
-        _entityNames = []
-    try:
-        if nltk.__version__[0:2] == "2.":
-            label = tree.node
-        else:
-            label = tree.label()
-    except AttributeError:
-        pass
-    else:
-        if label == 'NE':
-            _entityNames.append(' '.join([child[0] for child in tree]))
-        else:
-            for child in tree:
-                extractEntityNames(child, _entityNames=_entityNames)
-    return _entityNames
 
 #Fait un dictionnaire des occurences/ entités noommées
 def buildDict(chunkedSentences, _entityNames=None):
